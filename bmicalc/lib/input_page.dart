@@ -3,6 +3,10 @@ import 'package:bmicalc/constraints.dart';
 import 'package:flutter/material.dart';
 import 'components/reusableCard.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'Screens/result_page.dart';
+import 'calculator_brain.dart';
+import 'package:bmicalc/components/bottomButton.dart';
+import 'package:bmicalc/components/roundedIconButton.dart';
 
 enum Gender {
   male,
@@ -174,30 +178,22 @@ class _InputPageState extends State<InputPage> {
                       ],)
                     ], ),
             ))
-            ],))
-
+            ],)),
+            BottomButton(
+                buttonTitle: 'გამოთვლა',
+                onTap: (){
+                  CalculatorBrain bmi = CalculatorBrain(height: height,weight: weight);
+                  
+            Navigator.push(context, MaterialPageRoute(builder: (context)  => 
+              ResultPage(
+                bmiText: bmi.CalculateBMI(),
+                resultText: bmi.GetResult(),
+                descResultText: bmi.getInterpretation(),
+              )
+            ));
+                },
+            ),
         ],)
-    );
-  }
-}
-
-class RoundedIconButton extends StatelessWidget {
-
-  RoundedIconButton({@required this.icon,@required this.onPressed});
-  final IconData icon;
-  final Function onPressed;
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-        child: Icon(icon),
-        onPressed: onPressed,
-        elevation: 0.0,
-        constraints: BoxConstraints.tightFor(
-          width:56.0,
-          height: 56.0, 
-        ),
-        shape: CircleBorder(),
-        fillColor: Color(0xFF4C4F5E),
     );
   }
 }
